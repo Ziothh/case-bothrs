@@ -23,10 +23,14 @@
           # nodePackages.prisma
         ];
 
+        devPkgs = with pkgs; [
+          unzip
+        ];
+
         # Inputs needed at compile-time
         nativeBuildInputs = with pkgs; [ 
           watchman
-        ];
+        ] ++ devPkgs;
         # Inputs needed at runtime
         buildInputs = with pkgs; [ ] ++ packages ++ libraries;
       in
