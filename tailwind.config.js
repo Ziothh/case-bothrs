@@ -10,9 +10,8 @@ function pxToRem(px) {
 /** @type import('tailwindcss').Config */
 module.exports = {
   content: [
-    "./app/**/*.tsx",
-    "./components/**/*.tsx",
-    // "./components/**/*.tsx",
+    "**/*.tsx",
+    "**/*.ts",
   ],
   theme: {
     extend: {},
@@ -20,6 +19,7 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       white: colors.white,
+      gray: '#ABABAB',
       background: {
         400: '#313135',
         600: '#221F2B',

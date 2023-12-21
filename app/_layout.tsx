@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 import { NativeWindStyleSheet } from "nativewind";
+import { View } from 'react-native';
+import { THEME } from '../constants';
 
 // This fixes nativewind styles not working on web
 NativeWindStyleSheet.setOutput({
@@ -42,22 +44,21 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  if (!loaded) return null;
 
   return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
+    <ThemeProvider value={THEME}>
+      <View className='bg h-full w-full'>
+        <Stack screenOptions={{ }}>
+          <Stack.Screen name="(main)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="yeet" options={{}} />
+        </Stack>
+      </View>
     </ThemeProvider>
   );
 }

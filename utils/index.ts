@@ -1,10 +1,4 @@
-import * as component from './component';
-import * as react from './react';
-
-const utils = {
-  component,
-  react,
-} as const;
+export * from './$lib';
+import * as utils from './$lib';
 
 export default utils;
-

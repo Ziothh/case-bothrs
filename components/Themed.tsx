@@ -5,7 +5,25 @@
 
 import { Text as DefaultText, useColorScheme, View as DefaultView } from 'react-native';
 
-import Colors from '../constants/Colors';
+const tintColorLight = '#2f95dc';
+const tintColorDark = '#fff';
+
+const Colors =  {
+  light: {
+    text: '#000',
+    background: '#fff',
+    tint: tintColorLight,
+    tabIconDefault: '#ccc',
+    tabIconSelected: tintColorLight,
+  },
+  dark: {
+    text: '#fff',
+    background: '#000',
+    tint: tintColorDark,
+    tabIconDefault: '#ccc',
+    tabIconSelected: tintColorDark,
+  },
+} as const;
 
 type ThemeProps = {
   lightColor?: string;
@@ -29,16 +47,16 @@ export function useThemeColor(
   }
 }
 
-export function Text(props: TextProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-
-  return <DefaultText style={[{ color }, style]} {...otherProps} />;
-}
-
-export function View(props: ViewProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
-
-  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
-}
+// export function Text(props: TextProps) {
+//   const { style, lightColor, darkColor, ...otherProps } = props;
+//   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+//
+//   return <DefaultText style={[{ color }, style]} {...otherProps} />;
+// }
+//
+// export function View(props: ViewProps) {
+//   const { style, lightColor, darkColor, ...otherProps } = props;
+//   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+//
+//   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+// }

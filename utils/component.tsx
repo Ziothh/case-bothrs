@@ -1,3 +1,6 @@
+import { View, Text } from "react-native"
+import { clsx } from "./$lib"
+
 export const withWrapper = <
   P extends Record<PropertyKey, any>,
   WP extends Record<PropertyKey, any>,
@@ -18,3 +21,20 @@ export function curryProps<T, P extends Partial<T>>(
 ): React.FC<Omit<T, keyof P>> {
   return (p) => <Component {...props as any} {...p} />
 }
+
+export const withDefaultClassNames = <
+  P extends { className?: string },
+  T extends
+  | React.FC<P>
+  | React.Component<P, any, any>
+  | (typeof View | typeof Text),
+>(
+  Component: T,
+  ...baseClassNames: clsx.ArgumentArray
+  // @ts-ignore
+): T => (({
+  // @ts-ignore
+  className,
+  ...props
+  // @ts-ignore
+}: any) => <Component {...props} className={clsx(...baseClassNames, className)} />) as any
