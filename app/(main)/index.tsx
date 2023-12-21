@@ -1,15 +1,16 @@
-import { Link, Route } from 'expo-router';
-import { Text, View } from 'react-native';
-import { icons } from '~/assets';
+import { Link } from 'expo-router';
 import { router, theme } from '~/features';
+import { View } from '~/features/nativewind';
+import utils from '~/utils';
 import { PageContainer } from '~/features/layout';
-import utils, { clsx } from '~/utils';
+import Icon from '~/components/icons/Icon';
 
 export default (function Home() {
   return (
-    <View className=''>
+    <PageContainer>
       <Header.Component />
-    </View>
+
+    </PageContainer>
   );
 } satisfies React.FC);
 
@@ -19,58 +20,56 @@ namespace Header {
     // TODO: fix links
     {
       title: 'Info',
-      icon: icons.AtomIcon,
+      icon: 'Atom',
       background: 'bg-purple-400',
       path: '/info'
     },
     {
       title: 'Tips',
-      icon: icons.TipIcon,
+      icon: 'Tip',
       background: 'bg-blue-600',
       path: '/tips'
     },
     {
       title: 'Trials',
-      icon: icons.TipIcon,
+      icon: 'Tip', // TODO: fix icon
       background: 'bg-cyan-400',
       path: '/trials'
     },
     {
       title: 'Community',
-      icon: icons.ChatIcon,
+      icon: 'Chat',
       background: 'bg-red',
       path: '/community'
     },
     {
       title: 'Tips',
-      icon: icons.TipIcon,
+      icon: 'Tip',
       background: 'bg-blue-600',
       path: '/tips'
     },
   ];
   export const Component: React.FC<{}> = () => {
     return (
-      <PageContainer>
-        <View className='px-[10px] flex w-full'>
-          <View className='flex flex-row justify-between'>
-            <View className='pt-2'>
-              <theme.h1>Hi Stef 👋</theme.h1>
-              <theme.h2.light>How can I help you today?</theme.h2.light>
-            </View>
-            <IconButton 
-            title='Extra' 
-            icon={icons.TipIcon} 
-            background='bg-purple-600' 
-            path='/extra'
-            />
+      <View className='px-[10px] flex w-full'>
+        <View className='flex flex-row justify-between'>
+          <View className='pt-2'>
+            <theme.h1>Hi Stef 👋</theme.h1>
+            <theme.h2.light>How can I help you today?</theme.h2.light>
           </View>
-            <View className="flex justify-between flex-row w-full mt-[15px]">
-              {BUTTON_LINKS.map((x, i) => (
-                <IconButton key={i} {...x} className='bg-red flex-1' />
-              ))}
-            </View>
+          <IconButton
+            title='Extra'
+            icon='Tip'
+            background='bg-purple-600'
+            path='/extra'
+          />
         </View>
-      </PageContainer>
+        <View className="flex justify-between flex-row w-full mt-[15px]">
+          {BUTTON_LINKS.map((x, i) => (
+            <IconButton key={i} {...x} className='bg-red flex-1' />
+          ))}
+        </View>
+      </View>
     );
   }
 
@@ -78,14 +77,12 @@ namespace Header {
     background: `bg-${string}`,
     className?: string,
     title: string,
-    icon: icons.Type
+    icon: React.ComponentProps<typeof Icon>['name']
     path: router.FsRoute | (`/${string}` & {}),
-  }> = ({ icon: Icon, ...props }) => (
+  }> = (props) => (
     <Link href={props.path} className={props.className}>
       <View className="relative flex flex-col items-center pb-5 pt-1">
-        <View className={clsx('h-[50px] w-[50px] p-[10px] rounded-full', props.background)}>
-          <Icon className='text-white' />
-        </View>
+        <Icon.WithCircle icon={props.icon} className={props.background} />
         <theme.p.sm className='absolute bottom-0 w-[152%] mt-[2px] text-center font-medium'>
           {props.title}
         </theme.p.sm>

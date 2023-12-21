@@ -1,13 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
 
 import { NativeWindStyleSheet } from "nativewind";
-import { View } from 'react-native';
-import { THEME } from '../constants';
+import { View } from '~/features/nativewind';
+import { theme } from '~/features';
 
 // This fixes nativewind styles not working on web
 NativeWindStyleSheet.setOutput({
@@ -51,7 +50,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider value={THEME}>
+    <ThemeProvider value={theme.CONFIG}>
       <View className='bg h-full w-full'>
         <Stack screenOptions={{ }}>
           <Stack.Screen name="(main)" options={{ headerShown: false }} />

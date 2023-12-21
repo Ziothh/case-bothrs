@@ -1,11 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
+import { Tabs } from 'expo-router';
+import { useColorScheme } from 'react-native';
 
 import utils, { clsx } from '../../utils';
 import { icons } from '../../assets';
 import { SvgProps } from 'react-native-svg';
-import { View } from 'react-native';
+import { View } from '~/features/nativewind';
+import Icon, { IconName } from '~/components/icons/Icon';
 
 // /**
 //  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -30,7 +31,7 @@ export default function TabLayout() {
         name="stats"
         options={{
           title: 'Stats',
-          tabBarIcon: utils.component.curryProps(TabBarIcon, { icon: icons.StatsIcon }),
+          tabBarIcon: utils.component.curryProps(TabBarIcon, { icon: 'Stats' }),
         }}
       />
       <Tabs.Screen
@@ -38,7 +39,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           headerShown: false,
-          tabBarIcon: utils.component.curryProps(TabBarIcon, { icon: icons.HomeIcon }),
+          tabBarIcon: utils.component.curryProps(TabBarIcon, { icon: 'Home' }),
           // headerRight: () => (
           //   <Link href="/modal" asChild>
           //     <Pressable>
@@ -59,7 +60,7 @@ export default function TabLayout() {
         name="account"
         options={{
           title: 'Account',
-          tabBarIcon: utils.component.curryProps(TabBarIcon, { icon: icons.ProfileIcon }),
+          tabBarIcon: utils.component.curryProps(TabBarIcon, { icon: 'Profile' }),
         }}
       />
     </Tabs>
@@ -67,7 +68,7 @@ export default function TabLayout() {
 }
 
 const TabBarIcon: React.FC<
-  { icon: React.FC<SvgProps> } &
+  { icon: IconName } &
   React.ComponentProps<
     NonNullable<
       NonNullable<
@@ -75,10 +76,10 @@ const TabBarIcon: React.FC<
       >['tabBarIcon']
     >
   >
-> = ({ icon: Icon, focused }) => {
+> = ({ icon, focused }) => {
   return (
     <View className='relative bg-transparent h-[26px] w-[26px] flex justify-center flex-row'>
-      <Icon className={clsx(
+      <Icon name={icon} className={clsx(
         'w-full h-full',
         focused ? 'text-cyan-400' : 'text-gray'
       )} />

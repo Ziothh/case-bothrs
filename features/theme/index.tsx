@@ -1,7 +1,7 @@
 import { DarkTheme, Theme } from "@react-navigation/native";
 import TW_CONFIG from '../../tailwind.config';
 import type { ComponentProps, FC, } from "react";
-import { Text } from "react-native";
+import { Text } from "~/features/nativewind";
 import { clsx } from "~/utils";
 
 // TODO: validate these TW_CONFIG properties
