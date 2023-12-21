@@ -1,6 +1,7 @@
 import type { SvgProps } from "react-native-svg"
 
-export type SVGIcon = React.FC<SvgProps>;
+/** The type of a svg icon React component */
+export type Type = React.FC<SvgProps>;
 
 export { default as AtomIcon } from './atom.svg';
 export { default as ChatIcon } from './chat.svg';
@@ -10,6 +11,7 @@ export { default as ProfileIcon } from './profile.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as StatsIcon } from './stats.svg';
 export { default as StrengthIcon } from './strength.svg';
+export { default as TipIcon } from './tip.svg';
 
 
 

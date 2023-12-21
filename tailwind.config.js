@@ -2,14 +2,16 @@
 
 const colors = require('tailwindcss/colors');
 
-/** @param {number} px */
-function pxToRem(px) {
-  return `${px / 16}rem`;
-}
+// /** @param {number} px */
+// function pxToRem(px) {
+//   return `${px / 16}rem`;
+// }
 
 /** @type import('tailwindcss').Config */
 module.exports = {
   content: [
+    "./app/**/*.tsx",
+    "./features/**/*.{ts, tsx}",
     "**/*.tsx",
     "**/*.ts",
   ],
@@ -20,6 +22,7 @@ module.exports = {
       current: 'currentColor',
       white: colors.white,
       gray: '#ABABAB',
+      red: '#FF5660',
       background: {
         400: '#313135',
         600: '#221F2B',
@@ -44,12 +47,12 @@ module.exports = {
       },
     },
     fontSize: {
-      xs: pxToRem(12),
-      sm: pxToRem(14),
-      base: pxToRem(16),
-      lg: pxToRem(20),
-      xl: pxToRem(22),
-      '2xl': pxToRem(34),
+      xs: 12,
+      sm: 14,
+      base: 16,
+      lg: 20,
+      xl: 22,
+      '2xl': 34,
     },
     fontFamily: {
       sans: [

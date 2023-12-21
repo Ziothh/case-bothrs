@@ -1,5 +1,5 @@
-import { View, SafeAreaView, SafeAreaViewComponent } from "react-native";
-import utils, { clsx } from "~/utils";
+import { View, SafeAreaView } from "react-native";
+import { clsx } from "~/utils";
 
 export const PageContainer: React.FC<React.ComponentProps<typeof View>> = ({
   className,

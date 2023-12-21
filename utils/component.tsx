@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import { clsx } from "./$lib"
+import { clsx } from "./general"
 
 export const withWrapper = <
   P extends Record<PropertyKey, any>,

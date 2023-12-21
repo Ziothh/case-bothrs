@@ -31,19 +31,23 @@ const createTextWithClassName = (...baseClassNames: string[]): FC<ComponentProps
 )
 
 const TEXT_STYLES = {
-  LIGHT: 'font-normal opacity-[70%]',
+  SHARED: 'text-white',
+  LIGHT: 'font-normal opacity-[0.7]',
   BOLD: 'font-bold',
 } as const;
-export const h1 = createTextWithClassName('text-2xl font-bold');
+
+export const h1 = createTextWithClassName(TEXT_STYLES.SHARED, 'text-2xl leading-[40px] font-bold');
+
+// className = ''
 export const h2 = {
   /** Default */
-  bold: createTextWithClassName('text-xl font-black'),
+  bold: createTextWithClassName(TEXT_STYLES.SHARED, 'text-xl font-black'),
   /** Used in subtitles, etc. */
-  light: createTextWithClassName('text-xl', TEXT_STYLES.LIGHT),
+  light: createTextWithClassName(TEXT_STYLES.SHARED, 'text-xl leading-[24px]', TEXT_STYLES.LIGHT),
 } as const;
 export const p = {
-  bold: createTextWithClassName('text-base', TEXT_STYLES.BOLD),
-  light: createTextWithClassName('text-base', TEXT_STYLES.LIGHT),
-  sm: createTextWithClassName('text-sm', TEXT_STYLES.LIGHT),
-  xs: createTextWithClassName('text-sm', TEXT_STYLES.LIGHT),
+  bold: createTextWithClassName(TEXT_STYLES.SHARED, 'text-base', TEXT_STYLES.BOLD),
+  light: createTextWithClassName(TEXT_STYLES.SHARED, 'text-base', TEXT_STYLES.LIGHT),
+  sm: createTextWithClassName(TEXT_STYLES.SHARED, 'text-sm', TEXT_STYLES.LIGHT),
+  xs: createTextWithClassName(TEXT_STYLES.SHARED, 'text-sm', TEXT_STYLES.LIGHT),
 } as const;
