@@ -1,19 +1,88 @@
 import { Link } from 'expo-router';
 import { router, theme } from '~/features';
-import { View } from '~/features/nativewind';
+import { ScrollView, Text, View } from '~/features/nativewind';
 import utils from '~/utils';
 import { PageContainer } from '~/features/layout';
 import Icon from '~/components/icons/Icon';
+import Card from '~/components/Card';
 
-export default (function Home() {
+const Home: React.FC = () => {
   return (
-    <PageContainer>
+    <PageContainer scrollable={false}>
       <Header.Component />
+
+      <ScrollView
+        horizontal={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
+        <View className='mt-3 h-full flex flex-col' style={{
+          rowGap: 12
+        }}>
+          <Card
+            title='Tip of the day'
+            icon='Tip'
+            iconBg='bg-blue-600'
+            buttonLeft={{
+              href: '/tips',
+              text: 'See all'
+            }}
+            buttonRight={{
+              href: '/tips/TODO',
+              text: 'Explore tip',
+            }}
+          >
+            <Card.ImageContent
+              title='Swallowing'
+              text='If you struggle with swallowing, eat soft foods wherever possible. You can check out some of our soft food recipes for ideas here.'
+              image='https://picsum.photos/200/300'
+            />
+          </Card>
+          <Card
+            title='Community'
+            icon='Tip'
+            iconBg='bg-pink-400'
+            buttonLeft={{
+              href: '/tips',
+              text: 'See all'
+            }}
+            buttonRight={{
+              href: '/tips/TODO',
+              text: 'Explore tip',
+            }}
+          >
+            <Card.GalleryContent
+              title="This week's topics"
+            />
+          </Card>
+          <Card
+            title='MG Update'
+            icon='Atom'
+            iconBg='bg-purple-600'
+            buttonLeft={{
+              href: '/tips',
+              text: 'See all'
+            }}
+            buttonRight={{
+              href: '/tips/TODO',
+              text: 'Explore tip',
+            }}
+          >
+            <Card.ImageContent
+              title='Swallowing'
+              text='If you struggle with swallowing, eat soft foods wherever possible. You can check out some of our soft food recipes for ideas here.'
+              image='https://picsum.photos/200/300'
+            />
+          </Card>
+
+        </View>
+        </ScrollView>
 
     </PageContainer>
   );
-} satisfies React.FC);
-
+}
+export default Home;
 
 namespace Header {
   const BUTTON_LINKS: utils.types.Tuple<5, React.ComponentProps<typeof IconButton>> = [
@@ -64,9 +133,9 @@ namespace Header {
             path='/extra'
           />
         </View>
-        <View className="flex justify-between flex-row w-full mt-[15px]">
+        <View className="flex justify-between flex-row w-full mt-[15px] pb-1">
           {BUTTON_LINKS.map((x, i) => (
-            <IconButton key={i} {...x} className='bg-red flex-1' />
+            <IconButton key={i} {...x} className='flex-1' />
           ))}
         </View>
       </View>
@@ -82,7 +151,7 @@ namespace Header {
   }> = (props) => (
     <Link href={props.path} className={props.className}>
       <View className="relative flex flex-col items-center pb-5 pt-1">
-        <Icon.WithCircle icon={props.icon} className={props.background} />
+        <Icon.WithCircle name={props.icon} className={props.background} />
         <theme.p.sm className='absolute bottom-0 w-[152%] mt-[2px] text-center font-medium'>
           {props.title}
         </theme.p.sm>

@@ -3,10 +3,9 @@ import { Tabs } from 'expo-router';
 import { useColorScheme } from 'react-native';
 
 import utils, { clsx } from '../../utils';
-import { icons } from '../../assets';
-import { SvgProps } from 'react-native-svg';
 import { View } from '~/features/nativewind';
 import Icon, { IconName } from '~/components/icons/Icon';
+import Home from './index';
 
 // /**
 //  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/

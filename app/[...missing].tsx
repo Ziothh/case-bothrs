@@ -1,7 +1,7 @@
-import { Link, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from 'react-native';
+import { Link, Text, View } from '~/features/nativewind';
 
 export default function NotFoundScreen() {
   return (

@@ -5,6 +5,7 @@ export type Type = React.FC<SvgProps>;
 
 export { default as AtomIcon } from './atom.svg';
 export { default as ChatIcon } from './chat.svg';
+export { default as CommunityPostDecoration } from './communityPostDecoration.svg';
 export { default as EyeIcon } from './eye.svg';
 export { default as HomeIcon } from './home.svg';
 export { default as ProfileIcon } from './profile.svg';

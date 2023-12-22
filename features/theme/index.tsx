@@ -34,19 +34,19 @@ const TEXT_STYLES = {
   SHARED: 'text-white',
   LIGHT: 'font-normal opacity-[0.7]',
   BOLD: 'font-bold',
+  BLACK: 'font-black',
 } as const;
 
 export const h1 = createTextWithClassName(TEXT_STYLES.SHARED, 'text-2xl leading-[40px] font-bold');
-
-// className = ''
 export const h2 = {
   /** Default */
   bold: createTextWithClassName(TEXT_STYLES.SHARED, 'text-xl font-black'),
   /** Used in subtitles, etc. */
   light: createTextWithClassName(TEXT_STYLES.SHARED, 'text-xl leading-[24px]', TEXT_STYLES.LIGHT),
 } as const;
+export const h3 = createTextWithClassName(TEXT_STYLES.SHARED, 'text-lg leading-[26px]', TEXT_STYLES.BLACK);
 export const p = {
-  bold: createTextWithClassName(TEXT_STYLES.SHARED, 'text-base', TEXT_STYLES.BOLD),
+  bold: createTextWithClassName(TEXT_STYLES.SHARED, 'text-base leading-[20px]', TEXT_STYLES.BOLD),
   light: createTextWithClassName(TEXT_STYLES.SHARED, 'text-base', TEXT_STYLES.LIGHT),
   sm: createTextWithClassName(TEXT_STYLES.SHARED, 'text-sm', TEXT_STYLES.LIGHT),
   xs: createTextWithClassName(TEXT_STYLES.SHARED, 'text-sm', TEXT_STYLES.LIGHT),
