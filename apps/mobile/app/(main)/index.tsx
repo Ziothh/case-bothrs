@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
-import { router, theme } from '~/features';
-import { ScrollView, Text, View } from '~/features/nativewind';
+import { api, router, theme } from '~/features';
+import { ScrollView, View } from '~/features/nativewind';
 import utils from '~/utils';
 import { PageContainer } from '~/features/layout';
 import Icon from '~/components/icons/Icon';

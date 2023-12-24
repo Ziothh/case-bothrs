@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import { NativeWindStyleSheet } from "nativewind";
 import { View } from '~/features/nativewind';
 import { theme } from '~/features';
+import { _APIProvider as APIProvider } from '~/features/api';
+
 
 // This fixes nativewind styles not working on web
 NativeWindStyleSheet.setOutput({
@@ -50,14 +52,16 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider value={theme.CONFIG}>
-      <View className='bg h-full w-full'>
-        <Stack screenOptions={{ }}>
-          <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="tips" options={{}} />
-        </Stack>
-      </View>
-    </ThemeProvider>
+    <APIProvider>
+      <ThemeProvider value={theme.CONFIG}>
+        <View className='bg h-full w-full'>
+          <Stack screenOptions={{}}>
+            <Stack.Screen name="(main)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="tips" options={{}} />
+          </Stack>
+        </View>
+      </ThemeProvider>
+    </APIProvider>
   );
 }

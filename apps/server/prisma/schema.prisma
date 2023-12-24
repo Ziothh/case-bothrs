@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id   String @id @default(uuid()) @map("_id")
+  firstName String
+  lastName String
+
+  topics Topic[]
+
+  // updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model Topic {
+  id    String @id @default(uuid()) @map("_id")
+  title String
+  text  String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  // updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+
+model Tip {
+  id    String @id @default(uuid()) @map("_id")
+  title String
+
+  category TipCategory
+
+  isTipOfTheDay Boolean @default(false)
+
+  // updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+enum TipCategory { 
+  Food
+  Weather
+  Stress
+}
