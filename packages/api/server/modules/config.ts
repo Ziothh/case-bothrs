@@ -1,5 +1,5 @@
 import type { DottedRecord } from '@acme/shared';
-import { Topic, Config } from '@prisma/client';
+import type { Topic, Config } from '@prisma/client';
 import { db } from './db';
 import { z } from 'zod';
 
