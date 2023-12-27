@@ -58,3 +58,6 @@ It exposes 2 modules:
 
 #### `/packages/shared`
 Contains utility functions and types that can be consumed by both applications and packages.
+
+### Retool admin panel
+The admin panel can be found at [https://zioth.retool.com/apps/cf809a4c-a0e2-11ee-acef-e74d2a355a63/NineID%20admin%20panel%20](https://zioth.retool.com/apps/cf809a4c-a0e2-11ee-acef-e74d2a355a63/NineID%20admin%20panel%20).
