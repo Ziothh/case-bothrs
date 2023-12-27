@@ -30,6 +30,7 @@ const Home: React.FC = () => {
             <Card
               title='Tip of the day'
               icon='Tip'
+              url={`/tips/${tipOfDay.data.id}`}
               iconBg='bg-blue-600'
               buttonLeft={{
                 href: '/tips',
@@ -51,6 +52,7 @@ const Home: React.FC = () => {
           {topics.data && topics.data.length !== 0 && (
             <Card
               title='Community'
+              url='/community'
               icon='Tip'
               iconBg='bg-pink-400'
               buttonLeft={{
@@ -88,17 +90,17 @@ const Home: React.FC = () => {
             </Card>
           )}
 
-
           <Card
             title='MG Update'
             icon='Atom'
+            url='/updates/latest'
             iconBg='bg-purple-600'
             buttonLeft={{
-              href: '/tips',
+              href: '/updates',
               text: 'See all'
             }}
             buttonRight={{
-              href: '/tips/TODO',
+              href: '/updates/latest',
               text: 'Explore tip',
             }}
           >
@@ -119,7 +121,6 @@ export default Home;
 
 namespace Header {
   const BUTTON_LINKS: utils.types.Tuple<5, React.ComponentProps<typeof IconButton>> = [
-    // TODO: fix links
     {
       title: 'Info',
       icon: 'Atom',
@@ -134,8 +135,8 @@ namespace Header {
     },
     {
       title: 'Trials',
-      icon: 'Tip', // TODO: fix icon
-      background: 'bg-cyan-400',
+      icon: 'Inbox',
+      background: 'bg-cyan-400 px-[13px]',
       path: '/trials'
     },
     {

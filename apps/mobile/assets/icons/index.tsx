@@ -8,6 +8,7 @@ export { default as ChatIcon } from './chat.svg';
 export { default as CommunityPostDecoration } from './communityPostDecoration.svg';
 export { default as EyeIcon } from './eye.svg';
 export { default as HomeIcon } from './home.svg';
+export { default as InboxIcon } from './inbox.svg';
 export { default as ProfileIcon } from './profile.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as StatsIcon } from './stats.svg';

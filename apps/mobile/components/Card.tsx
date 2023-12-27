@@ -1,13 +1,16 @@
+import { useRouter } from "expo-router"
 import React from "react"
 import Icon, { IconName } from "~/components/icons/Icon"
 import { router, theme } from "~/features"
-import { Image, Link, ScrollView, Text, View } from "~/features/nativewind"
+import { Image, Link, Pressable, ScrollView, Text, View } from "~/features/nativewind"
+import { FsRoute } from "~/features/router"
 import { clsx } from "~/utils"
 
 const Card:
   & React.FC<{
     icon: IconName,
     title: string
+    url?: FsRoute | (string & {})
     iconBg: `bg-${string}`
     buttonLeft: React.ComponentProps<typeof CardButton>
     buttonRight: React.ComponentProps<typeof CardButton>
@@ -17,16 +20,20 @@ const Card:
     ImageContent: typeof CardImageContent
     GalleryContent: typeof CardGalleryContent
   }
-  = ({ icon, iconBg, title, children, buttonRight, buttonLeft }) => {
+  = ({ icon, iconBg, title, children, buttonRight, buttonLeft, url }) => {
+    const router = useRouter();
+
     return (
       <View className="bg-background-500 rounded-[15px]" style={{
         shadowColor: '#00000000',
         shadowOpacity: 0.3,
       }}>
-        <View className="flex flex-row items-center px-4 py-[14px]">
+        <Pressable className="flex flex-row items-center px-4 py-[14px]"
+        onPress={!url ? undefined : () => router.push(url as FsRoute)}
+        >
           <Icon.WithCircle name={icon} className={clsx('mr-3', iconBg)} />
           <theme.h2.bold className="m-0">{title}</theme.h2.bold>
-        </View>
+        </Pressable>
         {children}
 
         <View className="flex flex-row border-t-[1px] border-background-600">
