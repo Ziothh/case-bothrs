@@ -1,12 +1,18 @@
 import { Link } from 'expo-router';
+import { icons } from "~/assets"
 import { api, router, theme } from '~/features';
 import { ScrollView, View } from '~/features/nativewind';
-import utils from '~/utils';
+import utils, { clsx } from '~/utils';
 import { PageContainer } from '~/features/layout';
 import Icon from '~/components/icons/Icon';
 import Card from '~/components/Card';
 
+
 const Home: React.FC = () => {
+  const tipOfDay = api.tip.tipOfDay.get.useQuery();
+  const topics = api.topic.getLatest.useQuery()
+
+
   return (
     <PageContainer scrollable={false}>
       <Header.Component />
@@ -20,42 +26,69 @@ const Home: React.FC = () => {
         <View className='mt-3 h-full flex flex-col' style={{
           rowGap: 12
         }}>
-          <Card
-            title='Tip of the day'
-            icon='Tip'
-            iconBg='bg-blue-600'
-            buttonLeft={{
-              href: '/tips',
-              text: 'See all'
-            }}
-            buttonRight={{
-              href: '/tips/TODO',
-              text: 'Explore tip',
-            }}
-          >
-            <Card.ImageContent
-              title='Swallowing'
-              text='If you struggle with swallowing, eat soft foods wherever possible. You can check out some of our soft food recipes for ideas here.'
-              image='https://picsum.photos/200/300'
-            />
-          </Card>
-          <Card
-            title='Community'
-            icon='Tip'
-            iconBg='bg-pink-400'
-            buttonLeft={{
-              href: '/tips',
-              text: 'See all'
-            }}
-            buttonRight={{
-              href: '/tips/TODO',
-              text: 'Explore tip',
-            }}
-          >
-            <Card.GalleryContent
-              title="This week's topics"
-            />
-          </Card>
+          {tipOfDay.data && (
+            <Card
+              title='Tip of the day'
+              icon='Tip'
+              iconBg='bg-blue-600'
+              buttonLeft={{
+                href: '/tips',
+                text: 'See all'
+              }}
+              buttonRight={{
+                href: '/tips/TODO',
+                text: 'Explore tip',
+              }}
+            >
+              <Card.ImageContent
+                title={tipOfDay.data.title}
+                text={tipOfDay.data.text}
+                image={utils.parseImageUrl(tipOfDay.data.imageUrl)}
+              />
+            </Card>
+          )}
+
+          {topics.data && topics.data.length !== 0 && (
+            <Card
+              title='Community'
+              icon='Tip'
+              iconBg='bg-pink-400'
+              buttonLeft={{
+                href: '/tips',
+                text: 'See all'
+              }}
+              buttonRight={{
+                href: '/tips/TODO',
+                text: 'Explore tip',
+              }}
+            >
+              <Card.GalleryContent
+                title="This week's topics"
+                cards={topics.data.map((x) => (
+                  <View key={x.id} className={clsx(
+                    'flex px-5 py-[12px] bg-background-500 rounded-[15px]',
+                    topics.data.length > 1 && 'w-[290] mr-2'
+                  )}>
+                    <View className="flex flex-row mb-[18px]">
+                      <icons.CommunityPostDecoration />
+                      <View className="ml-4">
+                        <theme.p.sm>
+                          posted {utils.calculateRelativeMonthDate(x.createdAt)} ago	• {x.user.firstName} {x.user.lastName}
+                        </theme.p.sm>
+                        <theme.p.bold>{x.title}</theme.p.bold>
+                      </View>
+                    </View>
+                    <theme.p.bold className="font-normal mb-2">
+                      {x.text}
+                    </theme.p.bold>
+                  </View>
+                ))}
+
+              />
+            </Card>
+          )}
+
+
           <Card
             title='MG Update'
             icon='Atom'
@@ -72,12 +105,12 @@ const Home: React.FC = () => {
             <Card.ImageContent
               title='Swallowing'
               text='If you struggle with swallowing, eat soft foods wherever possible. You can check out some of our soft food recipes for ideas here.'
-              image='https://picsum.photos/200/300'
+              image={utils.parseImageUrl('/images/spaghet.jpg')}
             />
           </Card>
 
         </View>
-        </ScrollView>
+      </ScrollView>
 
     </PageContainer>
   );

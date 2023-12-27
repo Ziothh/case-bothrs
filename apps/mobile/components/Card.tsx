@@ -1,5 +1,4 @@
 import React from "react"
-import { icons } from "~/assets"
 import Icon, { IconName } from "~/components/icons/Icon"
 import { router, theme } from "~/features"
 import { Image, Link, ScrollView, Text, View } from "~/features/nativewind"
@@ -63,8 +62,10 @@ const CardImageContent: React.FC<{
     </View>
     <View className="w-full" style={{ aspectRatio: 350 / 193 }} >
       <Image
-        source={require('~/assets/images/spaghet.jpg')}
-        className="w-full h-full bg-red"
+        source={props.image ? {
+          uri: props.image
+        } : require('~/assets/images/spaghet.jpg')}
+        className="w-full h-full"
       />
     </View>
   </View>
@@ -72,41 +73,22 @@ const CardImageContent: React.FC<{
 Card.ImageContent = CardImageContent;
 
 
-const CARD_PLACEHOLDER_DATA = {
-  title: 'My MG experience',
-  text: 'This is a sharing about my recovery from Myasthenia Gravis (MG). This disease started initially from my jaw. When I ate or chew something, I would feel tired soon and then had to stop chewing because I had no strength to do it...',
-  userName: 'Dries Droopy',
-} as const;
-
 const CardGalleryContent: React.FC<{
   title: string
+  cards: React.ReactNode[]
   // cards: 
-}> = (props) => (
-  <View className="bg-background-600 p-4">
-    <theme.h3 className="px-2 mb-[10px]">{props.title}</theme.h3>
-    <ScrollView className="pb-[10px]" horizontal showsHorizontalScrollIndicator={false}>
-      {new Array(5)
-        .fill(CARD_PLACEHOLDER_DATA)
-        .map((x: typeof CARD_PLACEHOLDER_DATA, i) => (
-          <View key={i} className="flex w-[290] px-5 py-[12px] mr-2 bg-background-500 rounded-[15px]" style={{
-          }}>
-            <View className="flex flex-row mb-[18px]">
-              <icons.CommunityPostDecoration />
-              <View className="ml-4">
-                <theme.p.sm>
-                  posted 2 days ago	• {x.userName}
-                </theme.p.sm>
-                <theme.p.bold>{x.title}</theme.p.bold>
+}> = (props) => {
+  const Container = props.cards.length > 1
+    ? ScrollView
+    : View
 
-
-              </View>
-            </View>
-            <theme.p.bold className="font-normal mb-2">
-              {x.text}
-            </theme.p.bold>
-          </View>
-        ))}
-    </ScrollView>
-  </View>
-);
+  return (
+    <View className="bg-background-600 p-4">
+      <theme.h3 className="px-2 mb-[10px]">{props.title}</theme.h3>
+      <Container className="pb-[10px]" horizontal showsHorizontalScrollIndicator={false}>
+        {props.cards}
+      </Container>
+    </View>
+  )
+};
 Card.GalleryContent = CardGalleryContent;

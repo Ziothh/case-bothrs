@@ -10,6 +10,7 @@
         overlays = [];
         pkgs = import nixpkgs {
           inherit system overlays;
+          config.allowUnfree = true; # For ngrok
         };
 
         libraries = with pkgs; [ ];
@@ -25,6 +26,7 @@
 
         devPkgs = with pkgs; [
           unzip
+          ngrok # Public tunel to localhost
         ];
 
         # Inputs needed at compile-time

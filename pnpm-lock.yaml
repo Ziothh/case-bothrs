@@ -98,6 +98,9 @@ importers:
       superjson:
         specifier: ^2.2.1
         version: 2.2.1
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
     devDependencies:
       '@babel/core':
         specifier: ^7.20.0
@@ -166,9 +169,6 @@ importers:
       eslint:
         specifier: ^8.54.0
         version: 8.56.0
-      prisma:
-        specifier: ^5.6.0
-        version: 5.7.1
 
   apps/web:
     dependencies:
@@ -203,6 +203,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@acme/shared':
+        specifier: workspace:^
+        version: link:../shared
       '@prisma/client':
         specifier: ^5.6.0
         version: 5.7.1(prisma@5.7.1)
@@ -286,6 +289,8 @@ importers:
       tsup:
         specifier: ^6.5.0
         version: 6.7.0(typescript@5.3.3)
+
+  packages/shared: {}
 
   packages/ui:
     dependencies:

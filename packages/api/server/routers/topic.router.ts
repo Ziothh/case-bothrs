@@ -12,6 +12,14 @@ export default tRPC.router({
     }),
 
   getLatest: tRPC.procedure.public.query(({ ctx }) => {
-    return null;
+    const oneWeekBefore = 1000 * 60 * 60 * 24;
+    const minDate = new Date(Date.now() - oneWeekBefore);
+
+    return ctx.db.topic.findMany({
+      where: { createdAt: { gt: minDate }},
+      include: { user: true },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+    });
   }),
 });

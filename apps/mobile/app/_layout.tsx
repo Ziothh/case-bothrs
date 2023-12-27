@@ -7,7 +7,9 @@ import { useEffect } from 'react';
 import { NativeWindStyleSheet } from "nativewind";
 import { View } from '~/features/nativewind';
 import { theme } from '~/features';
-import { _APIProvider as APIProvider } from '~/features/api';
+import { _APIProvider as APIProvider, api } from '~/features/api';
+import { component } from '~/utils';
+import { useQuery } from '@tanstack/react-query';
 
 
 // This fixes nativewind styles not working on web
@@ -28,40 +30,48 @@ export const unstable_settings = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
-  });
+export default component.withWrapper(
+  () => {
+    const [loaded, error] = useFonts({
+      SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+      ...FontAwesome.font,
+    });
+    const tipOfDay = api.tip.tipOfDay.get.useQuery();
+    const topics = api.topic.getLatest.useQuery()
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    const allLoaded = loaded
+      && !tipOfDay.isLoading 
+      && !topics.isLoading
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+    useEffect(() => {
+      if (error) throw error;
+    }, [error]);
 
-  if (!loaded) return null;
+    useEffect(() => {
+      if (allLoaded) {
+        SplashScreen.hideAsync();
+      }
+    }, [allLoaded]);
 
-  return <RootLayoutNav />;
-}
+    if (!allLoaded) return null;
+
+    return <RootLayoutNav />;
+
+  },
+  APIProvider
+);
 
 function RootLayoutNav() {
   return (
-    <APIProvider>
-      <ThemeProvider value={theme.CONFIG}>
-        <View className='bg h-full w-full'>
-          <Stack screenOptions={{}}>
-            <Stack.Screen name="(main)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-            <Stack.Screen name="tips" options={{}} />
-          </Stack>
-        </View>
-      </ThemeProvider>
-    </APIProvider>
+    <ThemeProvider value={theme.CONFIG}>
+      <View className='bg h-full w-full'>
+        <Stack screenOptions={{}}>
+          <Stack.Screen name="(main)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="tips" options={{}} />
+        </Stack>
+      </View>
+    </ThemeProvider>
   );
 }
