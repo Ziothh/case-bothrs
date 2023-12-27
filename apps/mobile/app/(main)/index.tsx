@@ -36,7 +36,7 @@ const Home: React.FC = () => {
                 text: 'See all'
               }}
               buttonRight={{
-                href: '/tips/TODO',
+                href: `/tips/${tipOfDay.data.id}`,
                 text: 'Explore tip',
               }}
             >

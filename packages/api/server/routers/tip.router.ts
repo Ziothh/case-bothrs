@@ -3,6 +3,11 @@ import { z } from "zod";
 import { AppConfig, tRPC } from "../modules";
 
 export default tRPC.router({
+  getOne: tRPC.procedure.public
+    .input(z.object({ id: z.string( )}))
+    .query(({ ctx, input }) => ctx.db.tip.findFirst({
+      where: input,
+    })),
   getAll: tRPC.procedure.public
     .query(({ ctx }) => ctx.db.tip.findMany({ include: { category: true }})),
   insert: tRPC.procedure.retool

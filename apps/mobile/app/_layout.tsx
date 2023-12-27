@@ -1,11 +1,11 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
 
 import { NativeWindStyleSheet } from "nativewind";
-import { View } from '~/features/nativewind';
+import { Text, View } from '~/features/nativewind';
 import { theme } from '~/features';
 import { _APIProvider as APIProvider, api } from '~/features/api';
 import { component } from '~/utils';
@@ -69,7 +69,11 @@ function RootLayoutNav() {
         <Stack screenOptions={{}}>
           <Stack.Screen name="(main)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="tips" options={{}} />
+          <Stack.Screen name="tips/index" options={{ }} />
+          <Stack.Screen name="tips/[id]" options={{ headerTitle: () => {
+            const search = useLocalSearchParams();
+            return <Text className='text-white'>{`tips/${search.id}`}</Text>
+          } }} />
         </Stack>
       </View>
     </ThemeProvider>
