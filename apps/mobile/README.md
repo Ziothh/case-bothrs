@@ -1,9 +1,11 @@
-# NineID case
+# `@acme/mobile`
+## Notable dependencies
+ - [expo](https://expo.dev/): React Native framework with great defaults and features
+    - expo-router
+    - metro (bundeler)
 
-## Time
-### 21/12/23
- - 15:52 - 16:15
+ - [tRPC](https://trpc.io/): Typesafe API calls to the router defined in `/packages/api`
+    - [@tanstack/query](https://tanstack.com/query/latest/docs/react/overview): Fetch state management library (dependency of tRPC)
 
-## DEV
-### Useful links
- - SVG to React component: [SVGR](https://react-svgr.com/playground/?native=true&typescript=true)
+## Commands
+Goto [package.json](./package.json) for the relevant commands.
