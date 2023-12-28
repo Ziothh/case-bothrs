@@ -82,12 +82,12 @@ namespace Content {
         icon='Tip'
         iconBg='bg-pink-400'
         buttonLeft={{
-          href: '/tips',
+          href: '/community',
           text: 'See all'
         }}
         buttonRight={{
-          href: '/tips/TODO',
-          text: 'Explore tip',
+          href: '/community/new',
+          text: 'Add topic',
         }}
       >
         <Card.GalleryContent
