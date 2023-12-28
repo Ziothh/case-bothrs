@@ -1,16 +1,16 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack, useGlobalSearchParams, useLocalSearchParams, useRouter } from 'expo-router';
+import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 
 import { NativeWindStyleSheet } from "nativewind";
-import { Image, Pressable, Text, View } from '~/features/nativewind';
+import { Pressable, View } from '~/features/nativewind';
 import { theme } from '~/features';
 import { _APIProvider as APIProvider, api } from '~/features/api';
-import { component, loadImages, parseImageUrl } from '~/utils';
-import TipPage from './tips/[id]';
+import { component, loadImages } from '~/utils';
 import Icon from '~/components/icons/Icon';
+import * as Lato from '@expo-google-fonts/lato';
 
 
 // This fixes nativewind styles not working on web
@@ -35,15 +35,14 @@ export default component.withWrapper(
   () => {
     const [showApp, setShowApp] = useState(false);
     const [loaded, error] = useFonts({
-      SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+      Lato: Lato.Lato_400Regular,
+      'Lato-normal': Lato.Lato_400Regular,
+      'Lato-bold': Lato.Lato_700Bold,
+      'Lato-black': Lato.Lato_900Black,
       ...FontAwesome.font,
     });
     const tipOfDay = api.tip.tipOfDay.get.useQuery();
     const topics = api.topic.getLatest.useQuery()
-
-    const allLoaded = loaded
-      && !tipOfDay.isLoading
-      && !topics.isLoading
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.
     useEffect(() => {
