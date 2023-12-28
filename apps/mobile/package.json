@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@acme/api": "workspace:^",
+    "@expo-google-fonts/lato": "^0.2.3",
     "@expo/metro-config": "0.10.6",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/native": "^6.0.2",
