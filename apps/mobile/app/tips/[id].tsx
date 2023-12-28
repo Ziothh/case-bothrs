@@ -12,6 +12,7 @@ const TipPage: React.FC<{}> & {
   return (
     <View className="flex-1 flex justify-center items-center">
       <Stack.Screen options={{
+        headerShown: true,
         header(props) {
           return (
             <View className='relative h-[220px] w-full bg-blue-400'>

@@ -1,9 +1,9 @@
 import { APIRouter } from "@acme/api/client";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import { Pressable } from "react-native";
 import Icon from "~/components/icons/Icon";
 import { api, theme } from "~/features"
-import { Image, ScrollView, Text, View } from "~/features/nativewind";
+import { ScrollView, Text, View } from "~/features/nativewind";
 import { TipCard } from "~/features/tips";
 import utils, { react } from "~/utils"
 
@@ -41,6 +41,7 @@ export default utils.component.withWrapper(() => {
       <Stack.Screen options={{
         title: 'Tips/FAQ',
         headerLargeTitle: true,
+        headerShown: true,
         headerStyle: { backgroundColor: theme.CONFIG.colors.blue[400] },
         headerBackground: () => null,
         headerSearchBarOptions: {
@@ -55,7 +56,12 @@ export default utils.component.withWrapper(() => {
         },
       }} />
 
-      <ScrollView horizontal={false} bounces={false} contentInsetAdjustmentBehavior='automatic'
+      <ScrollView
+        horizontal={false}
+        bounces={false}
+        contentInsetAdjustmentBehavior='automatic'
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         className="w-full"
       >
         <Header.Component />

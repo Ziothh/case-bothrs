@@ -18,7 +18,7 @@ export const api = createTRPCReact<APIRouter.Type>();
  * setting the baseUrl to your production API URL.
  */
 const getBaseUrl = () => {
-  const USE_DEV_URL = true && process.env.NODE_ENV === 'development'
+  const USE_DEV_URL = false && process.env.NODE_ENV === 'development'
   /**
    * Gets the IP address of your host-machine. If it cannot automatically find it,
    * you'll have to manually set it. NOTE: Port 3000 should work for most but confirm

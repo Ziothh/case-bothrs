@@ -74,6 +74,7 @@ function RootLayoutNav() {
     <ThemeProvider value={theme.CONFIG}>
       <View className='bg-background-900 h-full w-full'>
         <Stack screenOptions={{
+          headerShown: false,
           headerLeft(props) {
             const router = useRouter()
 

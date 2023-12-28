@@ -2,7 +2,7 @@ import { useRouter } from "expo-router"
 import React from "react"
 import Icon, { IconName } from "~/components/icons/Icon"
 import { router, theme } from "~/features"
-import { Image, Link, Pressable, ScrollView, Text, View } from "~/features/nativewind"
+import { Image, Link, Pressable, ScrollView, View } from "~/features/nativewind"
 import { FsRoute } from "~/features/router"
 import { clsx } from "~/utils"
 
