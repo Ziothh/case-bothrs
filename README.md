@@ -20,6 +20,9 @@ You can look at [my flake.nix](./flake.nix) for the whole configuration.
 Run `pnpm install` to download the `node_modules` for all the packages 
 in the monorepo and link them together.
 
+#### `env`
+Don't forget to add a `.env` to the apps (see `.env.example`)
+
 ### `/apps`
 This folder contains all the applications that should be deployed.
 
@@ -30,6 +33,8 @@ Read the [README](./apps/mobile/README.md) for more information.
 
 #### [`/apps/server`](./apps/server/README.md)
 This is a NextJS app that's just used to expose the tRPC router.
+
+It's hosted on [https://case-nine-id-server.vercel.app/](https://case-nine-id-server.vercel.app/).
 
 Why NextJS? Because it's quick to set up and deploy to [Vercel](https://vercel.com).
 
