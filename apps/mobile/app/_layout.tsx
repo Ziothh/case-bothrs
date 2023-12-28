@@ -1,15 +1,16 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack, useLocalSearchParams } from 'expo-router';
-import { useEffect } from 'react';
+import { SplashScreen, Stack, useGlobalSearchParams, useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 
 import { NativeWindStyleSheet } from "nativewind";
-import { Text, View } from '~/features/nativewind';
+import { Image, Pressable, Text, View } from '~/features/nativewind';
 import { theme } from '~/features';
 import { _APIProvider as APIProvider, api } from '~/features/api';
-import { component } from '~/utils';
-import { useQuery } from '@tanstack/react-query';
+import { component, loadImages, parseImageUrl } from '~/utils';
+import TipPage from './tips/[id]';
+import Icon from '~/components/icons/Icon';
 
 
 // This fixes nativewind styles not working on web
@@ -32,6 +33,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default component.withWrapper(
   () => {
+    const [showApp, setShowApp] = useState(false);
     const [loaded, error] = useFonts({
       SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
       ...FontAwesome.font,
@@ -40,7 +42,7 @@ export default component.withWrapper(
     const topics = api.topic.getLatest.useQuery()
 
     const allLoaded = loaded
-      && !tipOfDay.isLoading 
+      && !tipOfDay.isLoading
       && !topics.isLoading
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -49,15 +51,21 @@ export default component.withWrapper(
     }, [error]);
 
     useEffect(() => {
-      if (allLoaded) {
-        SplashScreen.hideAsync();
-      }
-    }, [allLoaded]);
+      if (!showApp && (!loaded || tipOfDay.isLoading || topics.isLoading)) return;
 
-    if (!allLoaded) return null;
+      loadImages(
+        [
+          tipOfDay.data!.imageUrl,
+        ].filter(x => typeof x === 'string' && x !== '')
+      )
+        .then(() => SplashScreen.hideAsync())
+        .then(() => setShowApp(true));
+    }, [showApp, loaded, tipOfDay.isLoading, topics.isLoading]);
 
-    return <RootLayoutNav />;
 
+    return showApp
+      ? <RootLayoutNav />
+      : <View className='bg-background-900 h-full' />;
   },
   APIProvider
 );
@@ -65,15 +73,35 @@ export default component.withWrapper(
 function RootLayoutNav() {
   return (
     <ThemeProvider value={theme.CONFIG}>
-      <View className='bg h-full w-full'>
+      <View className='bg-background-900 h-full w-full'>
         <Stack screenOptions={{}}>
           <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="tips/index" options={{ }} />
-          <Stack.Screen name="tips/[id]" options={{ headerTitle: () => {
-            const search = useLocalSearchParams();
-            return <Text className='text-white'>{`tips/${search.id}`}</Text>
-          } }} />
+          <Stack.Screen name="tips/index" options={{}} />
+          <Stack.Screen name="tips/[id]" options={{
+            header(props) {
+              const { tip } = TipPage.usePageData();
+
+              return (
+                <View className='relative h-[220px] w-full'>
+                  <Image
+                    className='absolute top-0 left-0 h-full w-full'
+                    source={{ uri: parseImageUrl(tip.imageUrl) }}
+                  />
+
+                  <View className='
+                  relative z-10 h-full 
+                  px-6 py-7 
+                  flex flex-col justify-end 
+                  '>
+                    <Pressable onPress={props.navigation.goBack}>
+                      <Icon name='ArrowLeft' />
+                    </Pressable>
+                    <Text className='mt-[33.5px] text-[26px] leading-[30px] font-black text-white'>{tip.title}</Text>
+                  </View>
+                </View>
+              );
+            },
+          }} />
         </Stack>
       </View>
     </ThemeProvider>

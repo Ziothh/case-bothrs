@@ -3,6 +3,7 @@ import type { SvgProps } from "react-native-svg"
 /** The type of a svg icon React component */
 export type Type = React.FC<SvgProps>;
 
+export { default as ArrowLeftIcon } from './arrow-left.svg';
 export { default as AtomIcon } from './atom.svg';
 export { default as ChatIcon } from './chat.svg';
 export { default as CommunityPostDecoration } from './communityPostDecoration.svg';

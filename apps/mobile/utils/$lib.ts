@@ -1,3 +1,5 @@
+import { Image } from 'react-native';
+
 export * as component from './component';
 export * as react from './react';
 export * as types from './types';
@@ -6,14 +8,10 @@ export * from './general';
 
 export const loadImages = (images: string[]) => Promise.all(
   images.map(x => {
-    return new Promise<HTMLImageElement>((res) => {
-      const img = new Image();
-      img.src = parseImageUrl(x);
+    return Image.prefetch(parseImageUrl(x));
 
-      img.onload = () => res(img);
-    })
   })
-)
+);
 
 export const parseImageUrl = (imageUrl: string) => imageUrl.startsWith('/') 
   ? `${process.env.EXPO_PUBLIC_API_URL}${imageUrl}`

@@ -1,123 +1,150 @@
 import { Link } from 'expo-router';
+import { Suspense } from 'react';
 import { icons } from "~/assets"
 import { api, router, theme } from '~/features';
-import { ScrollView, View } from '~/features/nativewind';
 import utils, { clsx } from '~/utils';
+import { ScrollView, View } from '~/features/nativewind';
 import { PageContainer } from '~/features/layout';
 import Icon from '~/components/icons/Icon';
 import Card from '~/components/Card';
 
 
-const Home: React.FC = () => {
-  const tipOfDay = api.tip.tipOfDay.get.useQuery();
-  const topics = api.topic.getLatest.useQuery()
+const Home: React.FC = () => (
+  <PageContainer scrollable={false}>
+    <Header.Component />
+    <Suspense>
+      <Content.Component />
+    </Suspense>
+  </PageContainer>
+);
 
-
-  return (
-    <PageContainer scrollable={false}>
-      <Header.Component />
-
-      <ScrollView
-        horizontal={false}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-      >
-        <View className='mt-3 h-full flex flex-col' style={{
-          rowGap: 12
-        }}>
-          {tipOfDay.data && (
-            <Card
-              title='Tip of the day'
-              icon='Tip'
-              url={`/tips/${tipOfDay.data.id}`}
-              iconBg='bg-blue-600'
-              buttonLeft={{
-                href: '/tips',
-                text: 'See all'
-              }}
-              buttonRight={{
-                href: `/tips/${tipOfDay.data.id}`,
-                text: 'Explore tip',
-              }}
-            >
-              <Card.ImageContent
-                title={tipOfDay.data.title}
-                text={tipOfDay.data.text}
-                image={utils.parseImageUrl(tipOfDay.data.imageUrl)}
-              />
-            </Card>
-          )}
-
-          {topics.data && topics.data.length !== 0 && (
-            <Card
-              title='Community'
-              url='/community'
-              icon='Tip'
-              iconBg='bg-pink-400'
-              buttonLeft={{
-                href: '/tips',
-                text: 'See all'
-              }}
-              buttonRight={{
-                href: '/tips/TODO',
-                text: 'Explore tip',
-              }}
-            >
-              <Card.GalleryContent
-                title="This week's topics"
-                cards={topics.data.map((x) => (
-                  <View key={x.id} className={clsx(
-                    'flex px-5 py-[12px] bg-background-500 rounded-[15px]',
-                    topics.data.length > 1 && 'w-[290] mr-2'
-                  )}>
-                    <View className="flex flex-row mb-[18px]">
-                      <icons.CommunityPostDecoration />
-                      <View className="ml-4">
-                        <theme.p.sm>
-                          posted {utils.calculateRelativeMonthDate(x.createdAt)} ago	• {x.user.firstName} {x.user.lastName}
-                        </theme.p.sm>
-                        <theme.p.bold>{x.title}</theme.p.bold>
-                      </View>
-                    </View>
-                    <theme.p.bold className="font-normal mb-2">
-                      {x.text}
-                    </theme.p.bold>
-                  </View>
-                ))}
-
-              />
-            </Card>
-          )}
-
-          <Card
-            title='MG Update'
-            icon='Atom'
-            url='/updates/latest'
-            iconBg='bg-purple-600'
-            buttonLeft={{
-              href: '/updates',
-              text: 'See all'
-            }}
-            buttonRight={{
-              href: '/updates/latest',
-              text: 'Explore tip',
-            }}
-          >
-            <Card.ImageContent
-              title='Swallowing'
-              text='If you struggle with swallowing, eat soft foods wherever possible. You can check out some of our soft food recipes for ideas here.'
-              image={utils.parseImageUrl('/images/spaghet.jpg')}
-            />
-          </Card>
-
-        </View>
-      </ScrollView>
-
-    </PageContainer>
-  );
-}
 export default Home;
+
+namespace Content {
+  export const Component: React.FC = () => (
+    <ScrollView
+      horizontal={false}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+    >
+      <View className='mt-3 h-full flex flex-col' style={{
+        rowGap: 12
+      }}>
+        <TipOfDayCard />
+        <CommunityTopicsGallery />
+        <Card
+          title='MG Update'
+          icon='Atom'
+          url='/updates/latest'
+          iconBg='bg-purple-600'
+          buttonLeft={{
+            href: '/updates',
+            text: 'See all'
+          }}
+          buttonRight={{
+            href: '/updates/latest',
+            text: 'Explore tip',
+          }}
+        >
+          <Card.ImageContent
+            title='Swallowing'
+            text='If you struggle with swallowing, eat soft foods wherever possible. You can check out some of our soft food recipes for ideas here.'
+            image={utils.parseImageUrl('/images/spaghet.jpg')}
+          />
+        </Card>
+
+      </View>
+    </ScrollView>
+  );
+
+  const TipOfDayCard: React.FC = () => {
+    const tipOfDay = api.tip.tipOfDay.get.useQuery(undefined, {
+      suspense: true,
+    });
+
+    if (!tipOfDay.data) return null
+
+    return (
+      <Card
+        title='Tip of the day'
+        icon='Tip'
+        url={`/tips/${tipOfDay.data.id}`}
+        iconBg='bg-blue-600'
+        buttonLeft={{
+          href: '/tips',
+          text: 'See all'
+        }}
+        buttonRight={{
+          href: `/tips/${tipOfDay.data.id}`,
+          text: 'Explore tip',
+        }}
+      >
+        <Card.ImageContent
+          title={tipOfDay.data.title}
+          text={tipOfDay.data.text}
+          image={utils.parseImageUrl(tipOfDay.data.imageUrl)}
+        />
+      </Card>
+    )
+  }
+
+  const CommunityTopicsGallery: React.FC = () => {
+    const topics = api.topic.getLatest.useQuery(undefined, {
+      suspense: true,
+    });
+
+    if (!topics.data || topics.data.length === 0) return null;
+
+    return (
+      <Card
+        title='Community'
+        url='/community'
+        icon='Tip'
+        iconBg='bg-pink-400'
+        buttonLeft={{
+          href: '/tips',
+          text: 'See all'
+        }}
+        buttonRight={{
+          href: '/tips/TODO',
+          text: 'Explore tip',
+        }}
+      >
+        <Card.GalleryContent
+          title="This week's topics"
+          cards={topics.data.map((x) => (
+            <View key={x.id} className={clsx(
+              'flex px-5 py-[12px] bg-background-500 rounded-[15px]',
+              topics.data.length > 1 && 'w-[290] mr-2'
+            )}>
+              <View className="flex flex-row mb-[18px]">
+                <icons.CommunityPostDecoration />
+                <View className="ml-4">
+                  <theme.p.sm>
+                    posted {utils.calculateRelativeMonthDate(x.createdAt)} • {x.user.firstName} {x.user.lastName}
+                  </theme.p.sm>
+                  <Link href={{
+                    pathname: '/community/[id]' as any,
+                    params: {
+                      id: x.id
+                    },
+                  }}>
+                    <theme.p.bold>{x.title}</theme.p.bold>
+                  </Link>
+                </View>
+              </View>
+              <theme.p.bold className="font-normal mb-2">
+                {x.text}
+              </theme.p.bold>
+            </View>
+          ))}
+
+        />
+      </Card>
+    );
+  }
+}
 
 namespace Header {
   const BUTTON_LINKS: utils.types.Tuple<5, React.ComponentProps<typeof IconButton>> = [
