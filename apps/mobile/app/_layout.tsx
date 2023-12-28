@@ -25,7 +25,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '(main)',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -74,34 +74,20 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={theme.CONFIG}>
       <View className='bg-background-900 h-full w-full'>
-        <Stack screenOptions={{}}>
+        <Stack screenOptions={{
+          headerLeft(props) {
+            const router = useRouter()
+
+            return props.canGoBack
+              ? (
+                <Pressable onPress={router.back}>
+                  <Icon name='ArrowLeft' className="w-[22px] h-6" />
+                </Pressable>
+              )
+              : null;
+          }
+        }} >
           <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          <Stack.Screen name="tips/index" options={{}} />
-          <Stack.Screen name="tips/[id]" options={{
-            header(props) {
-              const { tip } = TipPage.usePageData();
-
-              return (
-                <View className='relative h-[220px] w-full'>
-                  <Image
-                    className='absolute top-0 left-0 h-full w-full'
-                    source={{ uri: parseImageUrl(tip.imageUrl) }}
-                  />
-
-                  <View className='
-                  relative z-10 h-full 
-                  px-6 py-7 
-                  flex flex-col justify-end 
-                  '>
-                    <Pressable onPress={props.navigation.goBack}>
-                      <Icon name='ArrowLeft' />
-                    </Pressable>
-                    <Text className='mt-[33.5px] text-[26px] leading-[30px] font-black text-white'>{tip.title}</Text>
-                  </View>
-                </View>
-              );
-            },
-          }} />
         </Stack>
       </View>
     </ThemeProvider>

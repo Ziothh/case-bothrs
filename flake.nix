@@ -18,10 +18,6 @@
         packages = with pkgs; [
           nodejs_20
           nodejs_20.pkgs.pnpm
-          # nodejs_20.pkgs.expo
-
-          # prisma-engines
-          # nodePackages.prisma
         ];
 
         devPkgs = with pkgs; [
@@ -31,8 +27,8 @@
 
         # Inputs needed at compile-time
         nativeBuildInputs = with pkgs; [ 
-          watchman
-        ] ++ devPkgs;
+          watchman # expo dependency
+        ]; 
         # Inputs needed at runtime
         buildInputs = with pkgs; [ ] ++ packages ++ libraries;
       in
@@ -46,8 +42,10 @@
         # };
 
         devShells.default = pkgs.mkShell {
-          inherit buildInputs nativeBuildInputs;
-          # buildInputs = packages;
+          # Inputs needed at runtime
+          inherit buildInputs;
+          # Inputs needed at compile-time
+          nativeBuildInputs = nativeBuildInputs ++ devPkgs;
 
           shellHook = ''
           	  PATH="$PWD/node_modules/.bin:$PATH"

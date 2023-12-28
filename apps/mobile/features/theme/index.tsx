@@ -20,6 +20,8 @@ export const CONFIG = {
     // @ts-ignore
     border: TW_CONFIG.theme.colors.background[900],
     notification: DarkTheme.colors.notification,
+    // @ts-ignore
+    blue: TW_CONFIG.theme.colors.blue as { 400: string, 600: string },
   },
 } satisfies Theme;
 

@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { Suspense } from 'react';
 import { icons } from "~/assets"
-import { api, router, theme } from '~/features';
+import { api, router, theme, tips } from '~/features';
 import utils, { clsx } from '~/utils';
 import { ScrollView, View } from '~/features/nativewind';
 import { PageContainer } from '~/features/layout';
@@ -63,30 +63,9 @@ namespace Content {
       suspense: true,
     });
 
-    if (!tipOfDay.data) return null
-
-    return (
-      <Card
-        title='Tip of the day'
-        icon='Tip'
-        url={`/tips/${tipOfDay.data.id}`}
-        iconBg='bg-blue-600'
-        buttonLeft={{
-          href: '/tips',
-          text: 'See all'
-        }}
-        buttonRight={{
-          href: `/tips/${tipOfDay.data.id}`,
-          text: 'Explore tip',
-        }}
-      >
-        <Card.ImageContent
-          title={tipOfDay.data.title}
-          text={tipOfDay.data.text}
-          image={utils.parseImageUrl(tipOfDay.data.imageUrl)}
-        />
-      </Card>
-    )
+    return tipOfDay.data
+      ? <tips.TipCard title='Tip of the day' tip={tipOfDay.data} />
+      : null;
   }
 
   const CommunityTopicsGallery: React.FC = () => {

@@ -1,7 +1,8 @@
-import { useGlobalSearchParams } from "expo-router";
+import { Stack, useGlobalSearchParams } from "expo-router";
+import Icon from "~/components/icons/Icon";
 import { api } from "~/features";
-import { ScrollView, Text } from "~/features/nativewind";
-
+import { Image, Pressable, ScrollView, Text, View } from "~/features/nativewind";
+import { parseImageUrl } from "~/utils";
 
 const TipPage: React.FC<{}> & {
   usePageData: typeof usePageData
@@ -9,13 +10,38 @@ const TipPage: React.FC<{}> & {
   const { tip } = TipPage.usePageData();
 
   return (
-    <ScrollView className="px-6 py-8">
-      <Text className="text-white text-[18px] font-normal leading-6" style={{
-        letterSpacing: -0.53,
-      }}>
-        {tip.text}
-      </Text>
-    </ScrollView>
+    <View className="flex-1 flex justify-center items-center">
+      <Stack.Screen options={{
+        header(props) {
+          return (
+            <View className='relative h-[220px] w-full bg-blue-400'>
+              <Image
+                className='absolute top-0 left-0 h-full w-full'
+                source={{ uri: parseImageUrl(tip.imageUrl) }}
+              />
+
+              <View className='
+                  relative z-10 h-full 
+                  px-6 py-7 
+                  flex flex-col justify-end 
+                  '>
+                <Pressable onPress={props.navigation.goBack}>
+                  <Icon name='ArrowLeft' />
+                </Pressable>
+                <Text className='mt-[33.5px] text-[26px] leading-[30px] font-black text-white'>{tip.title}</Text>
+              </View>
+            </View>
+          );
+        },
+      }} />
+      <ScrollView className="px-6 py-8">
+        <Text className="text-white text-[18px] font-normal leading-6" style={{
+          letterSpacing: -0.53,
+        }}>
+          {tip.text}
+        </Text>
+      </ScrollView>
+    </View>
   );
 }
 

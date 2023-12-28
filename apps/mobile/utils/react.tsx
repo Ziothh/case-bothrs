@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, createContext, useContext } from 'react'
+import { FC, PropsWithChildren, createContext, useContext, useState } from 'react'
 
 export const contextFactory = <
   T extends (arg?: any) => any,
@@ -27,4 +27,13 @@ export const contextFactory = <
       </ContextWrapper>
     )
   ]
+}
+
+export const useStateObject = <T,>(defaultState: T) => {
+  const [value, set] = useState(defaultState);
+
+  return {
+    value,
+    set
+  } as const;
 }
