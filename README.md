@@ -1,12 +1,13 @@
-# NineID case
-This repo contains the source code for the NineID case / test.
+# Bothrs case
+This repo contains the source code for the Bothrs case / test.
 
 ## Project structure & tech stack
 It is a `pnpm` monorepo that's split in 2 parts (see `/apps` & `/packages`).
 
 ### Setup
 #### `flake.nix` (optional)
-I use `nix` as my general package manager for NixOS and MacOS (instead of brew).
+I use `nix` as my general package & dotfiles manager for NixOS and MacOS (instead of brew).
+See [github:Ziothh/flakes](https://github.com/Ziothh/flakes).
 
 You can pull in all the needed dependencies by installing `nix`.
 After that's done you can set up your dev environment via:
